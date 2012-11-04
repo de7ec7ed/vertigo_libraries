@@ -1,0 +1,34 @@
+Naming Convention
+All functions, defines, structures, unions, typedefs and global variables should have the filename
+they are located in appended to the beginning of their name (ex. readme_function) followed by an
+underscore.
+
+Calling Convention
+
+C Functions - Should always return SUCCESS or FAILURE with a type of result_t
+unless the function can not fail. No overloaded variables are allowed, such as
+returning NULL for a virtual address on failure. Any parameter that is larger
+than size_t should be passed as a pointer.
+
+Assembly Functions - Should always return a variable in through r0 or NULL. These functions
+can support overloaded returns such as NULL or a virtual address. In general assembly
+functions should be minimized to getters and setters when possible. 
+
+Terminology
+
+CMSA = Common Memory System Architecture
+	- BPA = Branch Predictor Array
+	- CAC = Cache
+	- GEN = General
+	
+VMSA = Virtual Memory System Architecture
+	- MAC = Memory Access Control
+	- TLB = Translation Lookaside Buffer
+	- TT = Translation Tables
+	- GEN = General
+
+EXC = Exceptions
+
+CPUID = CPU Identification
+
+GEN = General
