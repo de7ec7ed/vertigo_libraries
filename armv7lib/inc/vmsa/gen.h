@@ -27,7 +27,6 @@
 
 #ifdef __C__
 
-
 typedef union gen_multiprocessor_affinity_register gen_multiprocessor_affinity_register_t;
 typedef union gen_physical_address_register gen_physical_address_register_t;
 typedef union gen_system_control_register gen_system_control_register_t;
