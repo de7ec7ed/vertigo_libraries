@@ -6,9 +6,9 @@
 
 result_t msm8960_uartdm_init(msm8960_uartdm_block_t *block, size_t options) {
 
-	VARIABLE_NOT_USED(block);
+	UNUSED_VARIABLE(block);
 
-	VARIABLE_NOT_USED(options);
+	UNUSED_VARIABLE(options);
 
 	while(block->sr.fields.txemt == FALSE) {}
 
@@ -19,7 +19,7 @@ result_t msm8960_uartdm_init(msm8960_uartdm_block_t *block, size_t options) {
 
 result_t msm8960_uartdm_fini(msm8960_uartdm_block_t *block) {
 
-	VARIABLE_NOT_USED(block);
+	UNUSED_VARIABLE(block);
 
 	while(block->sr.fields.txemt == FALSE) {}
 
@@ -30,7 +30,7 @@ result_t msm8960_uartdm_fini(msm8960_uartdm_block_t *block) {
 
 result_t msm8960_uartdm_set_clock(msm8960_uartdm_block_t *block) {
 
-	VARIABLE_NOT_USED(block);
+	UNUSED_VARIABLE(block);
 
 	// TODO: lots of freq and clock stuff.
 

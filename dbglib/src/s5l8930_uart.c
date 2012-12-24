@@ -5,9 +5,9 @@
 
 result_t s5l8930_uart_init(s5l8930_uart_block_t *block, size_t options) {
 
-	VARIABLE_NOT_USED(block);
+	UNUSED_VARIABLE(block);
 
-	VARIABLE_NOT_USED(options);
+	UNUSED_VARIABLE(options);
 
 	// TODO: Stuff to init the uart block
 	// I think polling mode is all that is needed.
@@ -24,7 +24,7 @@ result_t s5l8930_uart_init(s5l8930_uart_block_t *block, size_t options) {
 
 result_t s5l8930_uart_fini(s5l8930_uart_block_t *block) {
 
-	VARIABLE_NOT_USED(block);
+	UNUSED_VARIABLE(block);
 
 	// TODO: I'm not sure if there will ever be anything
 	// that needs to be done here. Maybe backup the old
@@ -35,7 +35,7 @@ result_t s5l8930_uart_fini(s5l8930_uart_block_t *block) {
 
 result_t s5l8930_uart_set_clock(s5l8930_uart_block_t *block) {
 
-	VARIABLE_NOT_USED(block);
+	UNUSED_VARIABLE(block);
 
 	// TODO: lots of freq and clock stuff.
 
