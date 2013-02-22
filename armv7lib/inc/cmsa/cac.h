@@ -1,6 +1,6 @@
 /* This file is part of VERTIGO.
  *
- * (C) Copyright 2013, Siege Technologies <siegetechnologies.com>
+ * (C) Copyright 2013, Siege Technologies <http://www.siegetechnologies.com>
  *
  * VERTIGO is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
