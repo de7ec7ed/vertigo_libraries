@@ -87,7 +87,9 @@
 
 #ifdef __DBGLIB_MSM8960__
 #define SER_INIT(a, b) msm8960_uartdm_init(a, b)
+#define SER_GETC(a, b) msm8960_uartdm_getc(a, b)
 #define SER_READ(a, b, c) msm8960_uartdm_read(a, b, c)
+#define SER_PUTC(a, b) msm8960_uartdm_putc(a, b)
 #define SER_WRITE(a, b, c) msm8960_uartdm_write(a, b, c)
 #define SER_FINI(a) msm8960_uartdm_fini(a)
 typedef volatile struct msm8960_uartdm_block ser_block_t;

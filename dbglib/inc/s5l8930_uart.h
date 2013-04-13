@@ -52,7 +52,9 @@
 
 #ifdef __DBGLIB_S5L8930__
 #define SER_INIT(a, b) s5l8930_uart_init(a, b)
+#define SER_GETC(a, b) s5l8930_uart_getc(a, b)
 #define SER_READ(a, b, c) s5l8930_uart_read(a, b, c)
+#define SER_PUTC(a, b) s5l8930_uart_putc(a, b)
 #define SER_WRITE(a, b, c) s5l8930_uart_write(a, b, c)
 #define SER_FINI(a) s5l8930_uart_fini(a)
 typedef volatile struct s5l8930_uart_block ser_block_t;
