@@ -1,24 +1,3 @@
-/* This file is part of VERTIGO.
- *
- * (C) Copyright 2013, Siege Technologies <http://www.siegetechnologies.com>
- * (C) Copyright 2013, Kirk Swidowski <http://www.swidowski.com>
- *
- * VERTIGO is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * VERTIGO is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with VERTIGO. If not, see <http://www.gnu.org/licenses/>.
- *
- * Written by Kirk Swidowski <kirk@swidowski.com>
- */
-
 #include <config.h>
 #include <defines.h>
 #include <types.h>
@@ -55,14 +34,6 @@ void * memset(void *pointer, size_t value, size_t size) {
         return pointer;
 }
 
-size_t strlen(const char *str)
-{
-	register const char *s;
-
-	for (s = str; *s; ++s);
-	return(s - str);
-}
-
 int memcmp(const void * str1, const void * str2, size_t count) {
 
 	register const unsigned char *s1 = (const unsigned char*)str1;
@@ -77,7 +48,58 @@ int memcmp(const void * str1, const void * str2, size_t count) {
   return 0;
 }
 
-// http://www.hackchina.com/en/r/60272/REVERSE.C__html
+size_t strlen(const char *str) {
+	register const char *s;
+
+	for (s = str; *s; ++s);
+	return(s - str);
+}
+
+char * strcat(char *dest, const char *src) {
+	char *ret = dest;
+
+	for (; *dest; ++dest);
+
+	while ((*dest++ = *src++) != '\0');
+
+	return ret;
+}
+
+char * strncat(char *dest, const char *src, size_t n) {
+    size_t dest_len = strlen(dest);
+    size_t i;
+
+    for (i = 0 ; i < n && src[i] != '\0' ; i++) {
+    	dest[dest_len + i] = src[i];
+    }
+
+    dest[dest_len + i] = '\0';
+
+    return dest;
+}
+
+char * strcpy(char *dest, const char *src) {
+    char *s = dest;
+
+    while ((*s++ = *src++) != 0);
+
+    return (dest);
+}
+
+char * strncpy(char *dest, const char *src, size_t n) {
+    size_t i;
+
+    for(i = 0; i < n && src[i] != '\0'; i++) {
+    	dest[i] = src[i];
+    }
+
+    for ( ; i < n; i++) {
+    	dest[i] = '\0';
+    }
+
+    return dest;
+}
+
 void reverse(char *s) {
 	char *j;
 	int c;
@@ -88,6 +110,54 @@ void reverse(char *s) {
 		*s++ = *j;
 		*j-- = c;
 	}
+
+	return;
+}
+
+void ltoa(long value, char *string, int radix) {
+	char tmp[33];
+	char *tp = tmp;
+	int i;
+	unsigned long v;
+	int sign;
+	char *sp;
+
+	if (radix > 36 || radix <= 1) {
+		return;
+	}
+
+	sign = (radix == 10 && value < 0);
+	if (sign) {
+		v = -value;
+	}
+	else {
+		v = (unsigned long)value;
+	}
+
+	while (v || tp == tmp) {
+		i = v % radix;
+		v = v / radix;
+		if (i < 10) {
+			*tp++ = i + '0';
+		}
+		else {
+			*tp++ = i + 'a' - 10;
+		}
+	}
+
+	if (string == NULL) {
+		return;
+	}
+	sp = string;
+
+	if (sign) {
+		*sp++ = '-';
+	}
+	while (tp > tmp) {
+		*sp++ = *--tp;
+	}
+
+	*sp = 0;
 
 	return;
 }
@@ -139,8 +209,6 @@ void itoa(int value, char *string, int radix) {
 	return;
 }
 
-
-// http://www.hackchina.com/en/r/60272/ATOI.C__html
 int atoi(char *s) {
 	int sign, n;
 
@@ -166,12 +234,10 @@ int atoi(char *s) {
 	return (sign * n);
 }
 
-// http://www.hackchina.com/en/r/60272/ISSPACE.C__html
 int isspace(int c) {
 	return (c <= ' ' && (c == ' ' || (c <= 13 && c >= 9)));
 }
 
-// http://www.hackchina.com/en/r/60272/ISDIGIT.C__html
 int isdigit(int c) {
 	return (c<='9' && c>='0');
 }

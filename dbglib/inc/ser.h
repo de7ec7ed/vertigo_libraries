@@ -39,7 +39,9 @@
 extern result_t ser_init(void *va);
 extern result_t ser_fini(void);
 
+extern result_t ser_putc(u8_t c);
 extern result_t ser_write(u8_t *buffer, size_t size);
+extern result_t ser_getc(u8_t *c);
 extern result_t ser_read(u8_t *buffer, size_t size);
 extern result_t ser_print(char *string, int number);
 

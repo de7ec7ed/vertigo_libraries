@@ -9,7 +9,10 @@ include $(MKDIR)/Makefile.common
 HDRFILES := $(INCLUDESDIR)/defines.h $(INCLUDESDIR)/types.h
 HDRFILES += $(INCDIR)/ser.h $(INCDIR)/config.h
 
-SRCFILES := ser.c s5l8930_uart.c msm8960_uartdm.c
+SRCFILES := ser.c
+SRCFILES += mem.c
+SRCFILES += s5l8930_uart.c
+SRCFILES += msm8960_uartdm.c
 
 include $(MKDIR)/Makefile_arm_lib.common
 

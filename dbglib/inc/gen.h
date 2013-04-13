@@ -22,6 +22,7 @@
 #ifndef __DBGLIB_GEN_H__
 #define __DBGLIB_GEN_H__
 
+#include <dbglib/mem.h>
 #include <dbglib/ser.h>
 
 #define DBG_LEVEL_0 0 // dbg off
@@ -38,17 +39,17 @@
 #define DBG_DEFINE_VARIABLE(a, b) \
 	u32_t a = b
 
-#define DBG_GET_VARIABLE(a) \
-	*(u32_t *)gen_add_base(&a)
+#define DBG_GET_VARIABLE(a, b) \
+	b = *(u32_t *)gen_add_base(&a);
 
 #define DBG_SET_VARIABLE(a, b) \
 		*(u32_t *)gen_add_base(&a) = b;
 
 #define DBG_LOG_FUNCTION(c, d) \
-	if((*(u32_t *)gen_add_base(&c)) >= d) { SERIAL_LOG((char *)gen_add_base((char *)__FUNCTION__), __LINE__); }
+	if((*(u32_t *)gen_add_base(&c)) >= d) { MEMORY_LOG((char *)gen_add_base((char *)__FUNCTION__), (unsigned long)__LINE__); SERIAL_LOG((char *)gen_add_base((char *)__FUNCTION__), __LINE__); }
 
 #define DBG_LOG_STATEMENT(a, b, c, d) \
-	if((*(u32_t *)gen_add_base(&c)) >= d) { SERIAL_LOG(gen_add_base(a), (u32_t)b); }
+	if((*(u32_t *)gen_add_base(&c)) >= d) { MEMORY_LOG(gen_add_base(a), (u32_t)b); SERIAL_LOG(gen_add_base(a), (u32_t)b); }
 
 #endif //__C__
 
