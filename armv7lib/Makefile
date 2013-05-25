@@ -13,11 +13,11 @@ HDRFILES += $(INCDIR)/cpuid.h $(INCDIR)/exc.h
 HDRFILES += $(INCDIR)/gen.h
 
 SRCFILES := vmsa/gen.S vmsa/gen.c
-SRCFILES += vmsa/tt.c vmsa/tt.S
-SRCFILES += vmsa/tlb.S
+SRCFILES += vmsa/tt.S vmsa/tt.c
+SRCFILES += vmsa/tlb.S vmsa/tlb.c
 SRCFILES += vmsa/flt.S
 
-SRCFILES += cmsa/cac.S
+SRCFILES += cmsa/cac.S cmsa/cac.c
 SRCFILES += cmsa/bpa.S
 
 SRCFILES += cpuid.S cpuid.c

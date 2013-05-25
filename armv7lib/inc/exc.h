@@ -32,6 +32,12 @@
 #ifndef __EXC_H__
 #define __EXC_H__
 
+#include <config.h>
+#include <defines.h>
+#include <types.h>
+
+#include <armv7lib/vmsa/tt.h>
+
 #define EXC_RESET_INDEX                 0 ///< Index of the reset vector in the vector table.
 #define EXC_UNDEFINED_INSTRUCTION_INDEX 1 ///< Index of the undefined instruction vector in the vector table.
 #define EXC_SUPERVISOR_CALL_INDEX       2 ///< Index of the supervisor call vector in the vector table.
@@ -45,5 +51,16 @@
 
 #define EXC_VECTOR_TABLE_LOW_ADDRESS  0x00000000 ///< Base address of the vector table if it is set low.
 #define EXC_VECTOR_TABLE_HIGH_ADDRESS 0xFFFF0000 ///< Base address of the vector table if it is set high.
+
+#ifdef __C__
+
+tt_virtual_address_t exc_get_vbar(void);
+void exc_set_vbar(tt_virtual_address_t);
+
+#endif //__C__
+
+#ifdef __ASSEMBLY__
+
+#endif //__ASSEMBLY__
 
 #endif //__EXC_H__

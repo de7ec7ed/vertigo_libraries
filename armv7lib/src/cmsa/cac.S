@@ -47,13 +47,23 @@ FUNCTION(cac_clean_mva_to_poc_data_cache)
 	mcr p15, 0, r0, c7, c10, 1
 	mov pc, lr
 
+FUNCTION(cac_clean_mva_to_pou_data_cache)
+	mcr p15, 0, r0, c7, c11, 1
+	mov pc, lr
+
+FUNCTION(cac_invalidate_mva_to_poc_data_cache)
+	mcr p15, 0, r0, c7, c6, 1
+	mov pc, lr
+
 FUNCTION(cac_flush_mva_to_poc_data_cache)
 	mcr p15, 0, r0, c7, c14, 1
+	mov pc, lr
 
 FUNCTION(cac_flush_entire_instruction_cache)
 	mcr p15, 0, r0, c7, c5, 0
 	mov pc, lr
 
+// TODO: Turn into C code
 FUNCTION(cac_flush_entire_data_cache)
 	push {r0 - r12}
 	dmb                                // ensure ordering with previous memory accesses

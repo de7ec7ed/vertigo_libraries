@@ -29,6 +29,7 @@
 
 #include <dbglib/s5l8930_uart.h>
 #include <dbglib/msm8960_uartdm.h>
+#include <dbglib/exynos5250_uart.h>
 
 ser_block_t *ser_block = NULL;
 

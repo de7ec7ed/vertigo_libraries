@@ -33,6 +33,14 @@
 #ifndef __CMSA_CAC_H__
 #define __CMSA_CAC_H__
 
+#define CAC_NUMBER_CACHE_LEVELS     7
+
+#define CAC_CACHE_LEVEL_ID_TYPE_NO_CACHE                        0x0
+#define CAC_CACHE_LEVEL_ID_INSTRUCTION_CACHE_ONLY               0x1
+#define CAC_CACHE_LEVEL_ID_DATA_CACHE_ONLY                      0x2
+#define CAC_CACHE_LEVEL_ID_SEPERATE_INSTRUCTION_AND_DATA_CACHES 0x3
+#define CAC_CACHE_LEVEL_ID_UNIFIED_CACHE                        0x4
+
 #ifdef __C__
 
 typedef union cac_cache_size_id_register cac_cache_size_id_register_t;
@@ -186,6 +194,37 @@ extern void cac_flush_entire_instruction_cache(void);
 extern void cac_clean_mva_to_poc_data_cache(tt_virtual_address_t va);
 
 /**
+ * @name cac_clean_mva_to_pou_data_cache
+ * @brief Clean the data cache by MVA to PoU.
+ *
+ * @details Provides the ability to clean the data cache by a modified virtual address to the
+ * point of unification.
+ *
+ * @param tt_virtual_address_t va
+ *
+ * Example Usage:
+ * @code
+ *    cac_clean_mva_to_pou_data_cache(va);
+ * @endcode
+ */
+extern void cac_clean_mva_to_pou_data_cache(tt_virtual_address_t va);
+
+/**
+ * @name cac_invalidate_mva_to_poc_data_cache
+ * @brief Invalidate the data cache by MVA to PoC.
+ *
+ * @details Provides the ability to invalidate the data cache by a modified virtual address to the
+ * point of coherency.
+ *
+ * @param tt_virtual_address_t va
+ *
+ * Example Usage:
+ * @code
+ *    cac_invalidate_mva_to_poc_data_cache(va);
+ * @endcode
+ */
+extern void cac_invalidate_mva_to_poc_data_cache(tt_virtual_address_t va);
+/**
  * @name cac_flush_mva_to_poc_data_cache
  * @brief Flush the data cache by MVA to PoC.
  *
@@ -215,6 +254,16 @@ extern void cac_flush_mva_to_poc_data_cache(tt_virtual_address_t va);
  * @endcode
  */
 extern void cac_flush_entire_data_cache(void);
+
+extern void cac_invalidate_instruction_cache_region(tt_virtual_address_t va, size_t size);
+
+extern void cac_invalidate_data_cache_region(tt_virtual_address_t va, size_t size);
+
+extern void cac_clean_data_cache_region(tt_virtual_address_t va, size_t size);
+
+extern void cac_flush_entire_cache(void);
+
+extern void cac_flush_cache_region(tt_virtual_address_t va, size_t size);
 
 #endif //__C__
 

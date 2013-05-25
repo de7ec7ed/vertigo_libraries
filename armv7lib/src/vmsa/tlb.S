@@ -41,3 +41,20 @@ FUNCTION(tlb_invalidate_entire_unified_tlb)
 FUNCTION(tlb_invalidate_mva_unified_tlb)
 	mcr p15, 0, r0, c8, c7, 1
 	mov pc, lr
+
+FUNCTION(tlb_invalidate_entire_instruction_tlb)
+	mcr p15, 0, r0, c8, c5, 0
+	mov pc, lr
+
+FUNCTION(tlb_invalidate_entire_data_tlb)
+	mcr p15, 0, r0, c8, c6, 0
+	mov pc, lr
+
+FUNCTION(tlb_invalidate_mva_instruction_tlb)
+	mcr p15, 0, r0, c8, c5, 1
+	mov pc, lr
+
+FUNCTION(tlb_invalidate_mva_data_tlb)
+	mcr p15, 0, r0, c8, c6, 1
+	mov pc, lr
+

@@ -20,3 +20,13 @@
  */
 
 #include <config.h>
+#include <defines.h>
+#include <armv7lib/exc.h>
+
+FUNCTION(exc_get_vbar)
+	mrc p15, 0, r0, c12, c0, 0 // Vector Base Address Register (VBAR)
+	mov pc, lr
+
+FUNCTION(exc_set_vbar)
+	mcr p15, 0, r0, c12, c0, 0 // Vector Base Address Register (VBAR)
+	mov pc, lr

@@ -46,11 +46,28 @@
 #define GEN_PAR_INNER_SO       0x1     ///< Strongly-ordered
 #define GEN_PAR_INNER_NC       0x0     ///< Non-cacheable
 
+#define GEN_PRRR_SO          0x0       ///< Strongly Ordered
+#define GEN_PRRR_D           0x1       ///< Device
+#define GEN_PRRR_NM          0x2       ///< Normal Memory
+
+#define GEN_NMRR_NC         0x0 ///< Non-cacheable
+#define GEN_NMRR_WB_WA      0x1 ///< Write-Back, Write-Allocate
+#define GEN_NMRR_WT_WA      0x2 ///< Write-Through, Write-Allocate
+#define GEN_NMRR_WB_NO_WA   0x3 ///< Write-Baack, No Write-Allocate
+
+#define GEN_NUMBER_PRRR_ENTRIES  8
+#define GEN_NUMBER_NMRR_ENTRIES  8
+
+
+
 #ifdef __C__
 
 typedef union gen_multiprocessor_affinity_register gen_multiprocessor_affinity_register_t;
 typedef union gen_physical_address_register gen_physical_address_register_t;
 typedef union gen_system_control_register gen_system_control_register_t;
+typedef union gen_context_id_register gen_context_id_register_t;
+typedef union gen_primary_region_remap_register gen_primary_region_remap_register_t;
+typedef union gen_normal_memory_remap_register gen_normal_memory_remap_register_t;
 
 union gen_multiprocessor_affinity_register {
 	struct {
@@ -108,6 +125,63 @@ union gen_system_control_register {
 		u32_t afe      :1; ///< Access Flag Enable bit. This bit enables use of the AP[0] bit in the translation table descriptors as an access flag. It also restricts access permissions in the translation table descriptors to the simplified model described in Simplified access permissions model.
 		u32_t te       :1; ///< Thumb Exception enable. This bit controls whether exceptions are taken in ARM or Thumb state.
 		u32_t unused_6 :1;
+	} fields;
+	u32_t all;
+};
+
+union gen_context_id_register {
+	struct {
+		u32_t asid      :8; ///< Address Space Identifier. This field is programmed with the value of the current ASID.
+		u32_t procid    :24; ///< Process Identifier. This field must be programmed with a unique value that identifies the current process.
+	} fields;
+	u32_t all;
+};
+
+union gen_primary_region_remap_register {
+	struct {
+		u32_t tr0 :2;    ///< Primary TEX mapping for memory attributes n. n is the value of the TEX[0], C and B bits.
+		u32_t tr1 :2;
+		u32_t tr2 :2;
+		u32_t tr3 :2;
+		u32_t tr4 :2;
+		u32_t tr5 :2;
+		u32_t tr6 :2;
+		u32_t tr7 :2;
+		u32_t ds0 :1;   ///< Mapping of S = 0 attribute for Device memory.
+		u32_t ds1 :1;
+		u32_t ns0 :1;   ///< Mapping of S = 0 attribute for Normal memory
+		u32_t ns1 :1;
+		u32_t unused_0 :4;
+		u32_t nos0 :1;
+		u32_t nos1 :1;
+		u32_t nos2 :1;
+		u32_t nos3 :1;
+		u32_t nos4 :1;
+		u32_t nos5 :1;
+		u32_t nos6 :1;
+		u32_t nos7 :1;
+	} fields;
+	u32_t all;
+};
+
+union gen_normal_memory_remap_register {
+	struct {
+		u32_t ir0 :2;   ///< Inner Cacheable property mapping for memory attributes n, if the region is mapped as Normal Memory by the TRn entry in the PRRR.
+		u32_t ir1 :2;
+		u32_t ir2 :2;
+		u32_t ir3 :2;
+		u32_t ir4 :2;
+		u32_t ir5 :2;
+		u32_t ir6 :2;
+		u32_t ir7 :2;
+		u32_t or0 :2;   ///< Outer Cacheable property mapping for memory attributes n, if the region is mapped as Normal Memory by the TRn entry in the PRRR
+		u32_t or1 :2;
+		u32_t or2 :2;
+		u32_t or3 :2;
+		u32_t or4 :2;
+		u32_t or5 :2;
+		u32_t or6 :2;
+		u32_t or7 :2;
 	} fields;
 	u32_t all;
 };
@@ -291,6 +365,17 @@ void gen_data_synchronization_barrier(void);
 
 void gen_instruction_synchronization_barrier(void);
 
+gen_context_id_register_t gen_get_contextidr(void);
+
+void gen_set_contextidr(gen_context_id_register_t contextidr);
+
+gen_primary_region_remap_register_t gen_get_prrr(void);
+void gen_set_prrr(gen_primary_region_remap_register_t prrr);
+
+gen_normal_memory_remap_register_t gen_get_nmrr(void);
+void gen_set_nmrr(gen_normal_memory_remap_register_t nmrr);
+
+
 #endif //__C__
 
 #ifdef __ASSEMBLY__
@@ -306,7 +391,8 @@ void gen_instruction_synchronization_barrier(void);
 .extern gen_data_memory_barrier
 .extern gen_data_synchronization_barrier
 .extern gen_instruction_synchronization_barrier
-
+.extern gen_get_contextidr
+.extern gen_set_contextidr
 #endif //__ASSEMBLY__
 
 #endif //__VMSA_GEN_H__

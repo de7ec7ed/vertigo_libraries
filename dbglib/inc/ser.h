@@ -26,6 +26,7 @@
 
 #include <dbglib/s5l8930_uart.h>
 #include <dbglib/msm8960_uartdm.h>
+#include <dbglib/exynos5250_uart.h>
 
 #ifdef __SERIAL_DEBUG__
 #define SERIAL_LOG(a, b) \

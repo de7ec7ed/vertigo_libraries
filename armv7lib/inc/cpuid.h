@@ -34,9 +34,13 @@
 
 #include <types.h>
 
+#define CPUID_CACHE_TYPE_L1LP_PHYSICAL_INDEX_PHYSICAL_TAG 0x3
+#define CPUID_CACHE_TYPE_FORMAT_ARMV7                     0x4
+
 #ifdef __C__
 
 typedef union cpuid_main_id_register cpuid_main_id_register_t;
+typedef union cpuid_cache_type_register cpuid_cache_type_register_t;
 
 /**
  * Describes the layout of the main id register.
@@ -52,7 +56,23 @@ union cpuid_main_id_register {
 	u32_t all;
 };
 
+union cpuid_cache_type_register {
+	struct {
+		u32_t iminline :4;     ///< Log 2 of the number of words in the smallest cache line of all the instruction caches that the processor controls.
+		u32_t unused_0 :10;
+		u32_t l1ip     :2;     ///< Level 1 instruction cache policy. Indicates the indexing and tagging policy for the L1 instruction cache.
+		u32_t dminline :4;     ///< Log 2 of the number of words in the smallest cache line of all the data and unified caches that the processor controls.
+		u32_t erg      :4;     ///< Exclusives Reservation Granule.
+		u32_t cwg      :4;     ///< Cache Writeback Granule.
+		u32_t unused_1 :1;
+		u32_t format   :3;     ///< Indicates the implemented CTR format.
+	} fields;
+	u32_t all;
+};
+
 extern cpuid_main_id_register_t cpuid_get_midr(void);
+
+extern cpuid_cache_type_register_t cpuid_get_ctr(void);
 
 #endif //__C__
 

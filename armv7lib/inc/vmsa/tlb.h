@@ -56,11 +56,11 @@ union tlb_type_register {
  *    tlbtr = tlb_get_tlbtr();
  * @endcode
  */
-tlb_type_register_t tlb_get_tlbtr(void);
+extern tlb_type_register_t tlb_get_tlbtr(void);
 
-void tlb_invalidate_entire_tlb_inner_shareable(void);
+extern void tlb_invalidate_entire_tlb_inner_shareable(void);
 
-void tlb_invalidate_mva_tlb_inner_shareable(void);
+extern void tlb_invalidate_mva_tlb_inner_shareable(tt_virtual_address_t va);
 /**
  * @name    tlb_invalidate_entire_unified_tlb
  * @brief   Invalidate the entire unified TLB.
@@ -73,7 +73,7 @@ void tlb_invalidate_mva_tlb_inner_shareable(void);
  *    tlb_invalidate_entire_unified_tlb();
  * @endcode
  */
-void tlb_invalidate_entire_unified_tlb(void);
+extern void tlb_invalidate_entire_unified_tlb(void);
 
 /**
  * @name    tlb_invalidate_mva_unified_tlb
@@ -88,7 +88,19 @@ void tlb_invalidate_entire_unified_tlb(void);
  *    tlb_invalidate_mva_unified_tlb();
  * @endcode
  */
-void tlb_invalidate_mva_unified_tlb(tt_virtual_address_t va);
+extern void tlb_invalidate_mva_unified_tlb(tt_virtual_address_t va);
+
+extern void tlb_invalidate_entire_instruction_tlb(void);
+
+extern void tlb_invalidate_entire_data_tlb(void);
+
+extern void tlb_invalidate_mva_data_tlb(tt_virtual_address_t va);
+
+extern void tlb_invalidate_mva_instruction_tlb(tt_virtual_address_t va);
+
+extern void tlb_invalidate_tlb_region(tt_virtual_address_t va, size_t size);
+
+extern void tlb_invalidate_entire_tlb(void);
 
 #endif //__C__
 
@@ -99,6 +111,10 @@ void tlb_invalidate_mva_unified_tlb(tt_virtual_address_t va);
 .extern tlb_invalidate_mva_tlb_inner_shareable
 .extern tlb_invalidate_entire_unified_tlb
 .extern tlb_invalidate_mva_unified_tlb
+.extern tlb_invalidate_entire_instruction_tlb
+.extern tlb_invalidate_entire_data_tlb
+.extern tlb_invalidate_mva_data_tlb
+.extern tlb_invalidate_mva_instruction_tlb
 
 #endif //__ASSEMBLY__
 

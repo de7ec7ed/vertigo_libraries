@@ -69,3 +69,27 @@ FUNCTION(gen_data_synchronization_barrier)
 FUNCTION(gen_instruction_synchronization_barrier)
 	isb
 	mov pc, lr
+
+FUNCTION(gen_get_contextidr)
+	mrc	p15, 0, r0, c13, c0, 1 // Read CP15 Context ID Register
+	mov pc, lr
+
+FUNCTION(gen_set_contextidr)
+	mcr p15, 0, r0, c13, c0, 1 // Write CP15 Context ID Register
+	mov pc, lr
+
+FUNCTION(gen_get_prrr)
+	mrc p15, 0, r0, c10, c2, 0 // Read PRRR Register
+	mov pc, lr
+
+FUNCTION(gen_set_prrr)
+	mcr p15, 0, r0, c10, c2, 0 // Write PRRR Register
+	mov pc, lr
+
+FUNCTION(gen_get_nmrr)
+	mrc p15, 0, r0, c10, c2, 1 // Read NMRR Register
+	mov pc, lr
+
+FUNCTION(gen_set_nmrr)
+	mcr p15, 0, r0, c10, c2, 1 // Write NMRR Register
+	mov pc, lr

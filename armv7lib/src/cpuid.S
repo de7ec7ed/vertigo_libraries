@@ -26,3 +26,7 @@
 FUNCTION(cpuid_get_midr)
 	mrc p15, 0, r0, c0, c0, 0
 	mov pc, lr
+
+FUNCTION(cpuid_get_ctr)
+	mrc p15, 0, r0, c0, c0, 1
+	mov pc, lr

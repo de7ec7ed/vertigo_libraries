@@ -53,7 +53,7 @@ void bpa_flush_mva_branch_predictor_array(tt_virtual_address_t va);
  * @name bpa_flush_entire_branch_predictor_array
  * @brief Flush the entire branch predictor array.
  *
- * @details Provides the ability to flush the entire branch preditor array.
+ * @details Provides the ability to flush the entire branch predictor array.
  *
  * Example Usage:
  * @code
