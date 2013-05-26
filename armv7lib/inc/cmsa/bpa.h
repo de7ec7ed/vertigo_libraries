@@ -30,8 +30,6 @@
 #ifndef __CMSA_BP_H__
 #define __CMSA_BP_H__
 
-#include <armv7lib/vmsa/tt.h>
-
 #ifdef __C__
 
 /**
@@ -47,7 +45,7 @@
  *    bpa_flush_mva_branch_predictor_array(va);
  * @endcode
  */
-void bpa_flush_mva_branch_predictor_array(tt_virtual_address_t va);
+void bpa_flush_mva_branch_predictor_array(void *va);
 
 /**
  * @name bpa_flush_entire_branch_predictor_array

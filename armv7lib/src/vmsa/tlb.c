@@ -7,13 +7,13 @@
 
 #include <armv7lib/vmsa/tlb.h>
 
-void tlb_invalidate_tlb_region(tt_virtual_address_t va, size_t size) {
+void tlb_invalidate_tlb_region(void *va, size_t size) {
 
-	tt_virtual_address_t tmp;
+	void *tmp;
 
-	va.all &= ~(TT_SMALL_PAGE_SIZE);
+	va = (void *)((size_t)va & ~(TT_SMALL_PAGE_SIZE));
 
-	for(tmp.all = va.all; tmp.all < (va.all + size); tmp.all += TT_SMALL_PAGE_SIZE) {
+	for(tmp = va; tmp < (void *)((size_t)va + size); tmp = (void *)((size_t)tmp + TT_SMALL_PAGE_SIZE)) {
 		tlb_invalidate_mva_unified_tlb(tmp);
 		tlb_invalidate_mva_data_tlb(tmp);
 		tlb_invalidate_mva_instruction_tlb(tmp);

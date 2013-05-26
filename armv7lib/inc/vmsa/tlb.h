@@ -60,7 +60,7 @@ extern tlb_type_register_t tlb_get_tlbtr(void);
 
 extern void tlb_invalidate_entire_tlb_inner_shareable(void);
 
-extern void tlb_invalidate_mva_tlb_inner_shareable(tt_virtual_address_t va);
+extern void tlb_invalidate_mva_tlb_inner_shareable(void *va);
 /**
  * @name    tlb_invalidate_entire_unified_tlb
  * @brief   Invalidate the entire unified TLB.
@@ -88,17 +88,17 @@ extern void tlb_invalidate_entire_unified_tlb(void);
  *    tlb_invalidate_mva_unified_tlb();
  * @endcode
  */
-extern void tlb_invalidate_mva_unified_tlb(tt_virtual_address_t va);
+extern void tlb_invalidate_mva_unified_tlb(void *va);
 
 extern void tlb_invalidate_entire_instruction_tlb(void);
 
 extern void tlb_invalidate_entire_data_tlb(void);
 
-extern void tlb_invalidate_mva_data_tlb(tt_virtual_address_t va);
+extern void tlb_invalidate_mva_data_tlb(void *va);
 
-extern void tlb_invalidate_mva_instruction_tlb(tt_virtual_address_t va);
+extern void tlb_invalidate_mva_instruction_tlb(void *va);
 
-extern void tlb_invalidate_tlb_region(tt_virtual_address_t va, size_t size);
+extern void tlb_invalidate_tlb_region(void *va, size_t size);
 
 extern void tlb_invalidate_entire_tlb(void);
 

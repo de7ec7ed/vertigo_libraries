@@ -28,7 +28,6 @@
  */
 
 #include <types.h>
-#include <armv7lib/vmsa/tt.h>
 
 #ifndef __CMSA_CAC_H__
 #define __CMSA_CAC_H__
@@ -160,7 +159,7 @@ extern cac_cache_size_id_register_t cac_get_ccsidr(void);
  *    cac_invalidate_mva_to_pou_instruction_cache(va);
  * @endcode
  */
-extern void cac_invalidate_mva_to_pou_instruction_cache(tt_virtual_address_t va);
+extern void cac_invalidate_mva_to_pou_instruction_cache(void *va);
 
 /**
  * @name cac_flush_entire_instruction_cache
@@ -191,7 +190,7 @@ extern void cac_flush_entire_instruction_cache(void);
  *    cac_clean_mva_to_poc_data_cache(va);
  * @endcode
  */
-extern void cac_clean_mva_to_poc_data_cache(tt_virtual_address_t va);
+extern void cac_clean_mva_to_poc_data_cache(void *va);
 
 /**
  * @name cac_clean_mva_to_pou_data_cache
@@ -207,7 +206,7 @@ extern void cac_clean_mva_to_poc_data_cache(tt_virtual_address_t va);
  *    cac_clean_mva_to_pou_data_cache(va);
  * @endcode
  */
-extern void cac_clean_mva_to_pou_data_cache(tt_virtual_address_t va);
+extern void cac_clean_mva_to_pou_data_cache(void *va);
 
 /**
  * @name cac_invalidate_mva_to_poc_data_cache
@@ -223,7 +222,7 @@ extern void cac_clean_mva_to_pou_data_cache(tt_virtual_address_t va);
  *    cac_invalidate_mva_to_poc_data_cache(va);
  * @endcode
  */
-extern void cac_invalidate_mva_to_poc_data_cache(tt_virtual_address_t va);
+extern void cac_invalidate_mva_to_poc_data_cache(void *va);
 /**
  * @name cac_flush_mva_to_poc_data_cache
  * @brief Flush the data cache by MVA to PoC.
@@ -238,7 +237,7 @@ extern void cac_invalidate_mva_to_poc_data_cache(tt_virtual_address_t va);
  *    cac_flush_mva_to_poc_data_cache(va);
  * @endcode
  */
-extern void cac_flush_mva_to_poc_data_cache(tt_virtual_address_t va);
+extern void cac_flush_mva_to_poc_data_cache(void *va);
 
 /**
  * @name cac_flush_entire_data_cache
@@ -255,15 +254,19 @@ extern void cac_flush_mva_to_poc_data_cache(tt_virtual_address_t va);
  */
 extern void cac_flush_entire_data_cache(void);
 
-extern void cac_invalidate_instruction_cache_region(tt_virtual_address_t va, size_t size);
+extern void cac_invalidate_cache_region(void *va, size_t size);
 
-extern void cac_invalidate_data_cache_region(tt_virtual_address_t va, size_t size);
+extern void cac_invalidate_instruction_cache_region(void *va, size_t size);
 
-extern void cac_clean_data_cache_region(tt_virtual_address_t va, size_t size);
+extern void cac_invalidate_data_cache_region(void *va, size_t size);
+
+extern void cac_clean_data_cache_region(void *va, size_t size);
 
 extern void cac_flush_entire_cache(void);
 
-extern void cac_flush_cache_region(tt_virtual_address_t va, size_t size);
+extern void cac_flush_cache_region(void *va, size_t size);
+
+extern void cac_clean_cache_region(void *va, size_t size);
 
 #endif //__C__
 
