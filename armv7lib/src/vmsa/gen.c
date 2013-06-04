@@ -25,6 +25,7 @@
 #include <armv7lib/vmsa/gen.h>
 #include <armv7lib/vmsa/tt.h>
 
+
 // This function should not be used for quick translations as it
 // requires a exhaustive search of the page tables with the
 // cp15_va_to_pa function
@@ -32,8 +33,7 @@ result_t gen_pa_to_va(tt_physical_address_t pa, tt_virtual_address_t start, tt_v
 
 	tt_physical_address_t tmp;
 	u32_t address;
-
-	*va = start;
+	result_t result;
 
 	address = (pa.all & ~(TT_SMALL_PAGE_SIZE - 1));
 	start.all &= ~(TT_SMALL_PAGE_SIZE - 1);
@@ -41,9 +41,9 @@ result_t gen_pa_to_va(tt_physical_address_t pa, tt_virtual_address_t start, tt_v
 
 	for(*va = start; va->all < end.all; va->all += TT_SMALL_PAGE_SIZE) {
 
-		gen_va_to_pa(*va, &tmp);
+		result = gen_va_to_pa(*va, &tmp);
 
-		if(tmp.all == address) {
+		if(result == SUCCESS && tmp.all == address) {
 			va->all |= (pa.all & (TT_SMALL_PAGE_SIZE - 1));
 			return SUCCESS;
 		}
@@ -59,7 +59,7 @@ result_t gen_va_to_pa(tt_virtual_address_t va, tt_physical_address_t *pa) {
 	gen_physical_address_register_t par;
 
 	// clear the par so a stale result is not returned
-	par.all = 0;
+	par.all = FAILURE;
 	gen_set_par(par);
 
 	gen_privileged_read_translation(va);
@@ -69,7 +69,7 @@ result_t gen_va_to_pa(tt_virtual_address_t va, tt_physical_address_t *pa) {
 	// be a legitimate translation
 	do {
 		par = gen_get_par();
-	} while(par.all == 0);
+	} while(par.all == FAILURE);
 
 	if(par.fields.f == TRUE) {
 		pa->all = (u32_t)NULL;

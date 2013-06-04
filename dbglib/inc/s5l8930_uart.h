@@ -52,8 +52,6 @@
 
 #ifdef __DBGLIB_S5L8930__
 #define SER_INIT(a, b) s5l8930_uart_init(a, b)
-#define SER_GETC(a, b) s5l8930_uart_getc(a, b)
-#define SER_READ(a, b, c) s5l8930_uart_read(a, b, c)
 #define SER_PUTC(a, b) s5l8930_uart_putc(a, b)
 #define SER_WRITE(a, b, c) s5l8930_uart_write(a, b, c)
 #define SER_FINI(a) s5l8930_uart_fini(a)
@@ -207,13 +205,8 @@ struct s5l8930_uart_block {
 result_t s5l8930_uart_init(s5l8930_uart_block_t *block, size_t options);
 result_t s5l8930_uart_fini(s5l8930_uart_block_t *block);
 
-result_t s5l8930_uart_set_clock(s5l8930_uart_block_t *block);
-
 result_t s5l8930_uart_write(s5l8930_uart_block_t *block, u8_t *buffer, size_t size);
-result_t s5l8930_uart_read(s5l8930_uart_block_t *block, u8_t *buffer, size_t size);
-
 result_t s5l8930_uart_putc(s5l8930_uart_block_t *block, u8_t c);
-result_t s5l8930_uart_getc(s5l8930_uart_block_t *block, u8_t *c);
 
 #endif //__C__
 

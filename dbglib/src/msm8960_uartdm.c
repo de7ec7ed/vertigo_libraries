@@ -78,19 +78,6 @@ result_t msm8960_uartdm_write(msm8960_uartdm_block_t *block, u8_t *buffer, size_
 	return SUCCESS;
 }
 
-result_t msm8960_uartdm_read( msm8960_uartdm_block_t *block, u8_t *buffer, size_t size) {
-
-	size_t i;
-
-	for(i = 0; i < size; i++) {
-		if(msm8960_uartdm_getc(block, &(buffer[i])) != SUCCESS) {
-			return FAILURE;
-		}
-	}
-
-	return FAILURE;
-}
-
 result_t msm8960_uartdm_putc(msm8960_uartdm_block_t *block, u8_t c) {
 
 	size_t i;
@@ -99,20 +86,6 @@ result_t msm8960_uartdm_putc(msm8960_uartdm_block_t *block, u8_t c) {
 		if(block->sr.fields.txrdy == TRUE) {
 			block->dmtx.all = 0x1;
 			block->tf.all = c;
-			return SUCCESS;
-		}
-	}
-
-	return FAILURE;
-}
-
-result_t msm8960_uartdm_getc(msm8960_uartdm_block_t *block, u8_t *c) {
-
-	size_t i;
-
-	for(i = 0; i < MSM8960_UARTDM_RX_TIMEOUT_PERIOD; i++) {
-		if(block->sr.fields.rxrdy == TRUE) {
-			*c = block->rf.all;
 			return SUCCESS;
 		}
 	}

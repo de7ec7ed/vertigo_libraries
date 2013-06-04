@@ -31,20 +31,12 @@ result_t qemu_uart_init(qemu_uart_block_t *block, size_t options) {
 
 	UNUSED_VARIABLE(options);
 
-	//block->uartcr.fields.uarten = FALSE;
-	//block->uartcr.fields.uarten = TRUE;
-
 	return SUCCESS;
 }
 
 result_t qemu_uart_fini(qemu_uart_block_t *block) {
 
 	UNUSED_VARIABLE(block);
-
-
-	//block->uartcr.fields.uarten = FALSE;
-	//block->uartcr.fields.uarten = TRUE;
-
 
 	return SUCCESS;
 }
@@ -59,25 +51,12 @@ result_t qemu_uart_write(qemu_uart_block_t *block, u8_t *buffer, size_t size) {
 		}
 	}
 
-	// wait for the fifo to clear
-	// the OS does't like us using it and
-	// returning with data still in the
-	// fifo
-	//while(block->uartfr.fields.txfe == FALSE) {}
-
 	return SUCCESS;
 }
 
 result_t qemu_uart_putc(qemu_uart_block_t *block, u8_t c) {
 
-	size_t i;
+	block->put_char.u8 = c;
 
-	for(i = 0; i < QEMU_UART_TX_TIMEOUT_PERIOD; i++) {
-		if(block->uartfr.fields.txff == FALSE) {
-			block->uartdr.fields.data = c;
-			return SUCCESS;
-		}
-	}
-
-	return FAILURE;
+	return SUCCESS;
 }

@@ -27,6 +27,7 @@
 #include <dbglib/s5l8930_uart.h>
 #include <dbglib/msm8960_uartdm.h>
 #include <dbglib/exynos5250_uart.h>
+#include <dbglib/qemu_uart.h>
 
 #ifdef __SERIAL_DEBUG__
 #define SERIAL_LOG(a, b) \
@@ -42,8 +43,6 @@ extern result_t ser_fini(void);
 
 extern result_t ser_putc(u8_t c);
 extern result_t ser_write(u8_t *buffer, size_t size);
-extern result_t ser_getc(u8_t *c);
-extern result_t ser_read(u8_t *buffer, size_t size);
 extern result_t ser_print(char *string, int number);
 
 extern void * ser_get_physical_address(void);

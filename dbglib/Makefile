@@ -14,6 +14,7 @@ SRCFILES += mem.c
 SRCFILES += s5l8930_uart.c
 SRCFILES += msm8960_uartdm.c
 SRCFILES += exynos5250_uart.c
+SRCFILES += qemu_uart.c
 
 include $(MKDIR)/Makefile_arm_lib.common
 

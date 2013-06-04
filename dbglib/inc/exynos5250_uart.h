@@ -52,8 +52,6 @@
 
 #ifdef __DBGLIB_EXYNOS5250__
 #define SER_INIT(a, b) exynos5250_uart_init(a, b)
-#define SER_GETC(a, b) exynos5250_uart_getc(a, b)
-#define SER_READ(a, b, c) exynos5250_uart_read(a, b, c)
 #define SER_PUTC(a, b) exynos5250_uart_putc(a, b)
 #define SER_WRITE(a, b, c) exynos5250_uart_write(a, b, c)
 #define SER_FINI(a) exynos5250_uart_fini(a)
@@ -102,7 +100,13 @@ union exynos5250_uart_control_register {
 		u32_t rtoe  :1; // Rx Time Out Enable
 		u32_t rit   :1; // Rx Interrupt Type
 		u32_t tit   :1; // Tx Interrupt Type
-		u32_t cs    :2; // Clock Selection
+		u32_t rtdse :1; // Rx DMA FSM to suspend when Rx Time-out occurs
+		u32_t rterf :1; // Rx Time-out feature when Rx FIFO
+		u32_t riii  :4; // Tx Timeout Interrupt Interval
+		u32_t rdbs  :3; // Rx DMA Busrt Size
+		u32_t res_0 :1;
+		u32_t tdbs  :3; // Tx DMA Burst Size
+		u32_t res_1 :9;
 	} fields;
 	u32_t all;
 };
@@ -113,8 +117,10 @@ union exynos5250_uart_fifo_control_register {
 		u32_t rfifor  :1; // Rx FIFO Reset
 		u32_t tfifor  :1; // Tx FIFO Reset
 		u32_t res_0   :1; // Reserved
-		u32_t rfifotl :2; // Rx FIFO Trigger Level
-		u32_t tfifotl :2; // Tx FIFO Trigger Level
+		u32_t rfifotl :3; // Rx FIFO Trigger Level
+		u32_t res_1   :1;
+		u32_t tfifotl :3; // Tx FIFO Trigger Level
+		u32_t res_2   :21;
 	} fields;
 	u32_t all;
 };
@@ -132,40 +138,49 @@ union exynos5250_uart_modem_control_register {
 
 union exynos5250_uart_tx_rx_status_register {
 	struct {
-		u32_t rbdr :1; // Receive Buffer Data Ready
-		u32_t tbe  :1; // Transmit Buffer Empty
-		u32_t te   :1; // Transmitter Empty
+		u32_t rbdr   :1; // Receive Buffer Data Ready
+		u32_t tbe    :1; // Transmit Buffer Empty
+		u32_t te     :1; // Transmitter Empty
+		u32_t rtsc   :1; // Rx Time-out status when read
+		u32_t res_0  :4;
+		u32_t rdfs   :4; // Current State of Rx DMA FSM
+		u32_t tdfs   :4; // Current State of Tx DMA FSM
+		u32_t rfcrts :8; // Rx FIFO counter capture value when Rx time-out occurs
+		u32_t res_1  :8;
 	} fields;
 	u32_t all;
 };
 
 union exynos5250_uart_error_status_register {
 	struct {
-		u32_t oe :1; // Overrun Error
-		u32_t pe :1; // Parity Error
-		u32_t fe :1; // Frame Error
-		u32_t bd :1; // Break Detect
+		u32_t oe    :1; // Overrun Error
+		u32_t pe    :1; // Parity Error
+		u32_t fe    :1; // Frame Error
+		u32_t bd    :1; // Break Detect
+		u32_t res_0 :28;
 	} fields;
 	u32_t all;
 };
 
 union exynos5250_uart_fifo_status_register {
 	struct {
-		u32_t rfifoc :6; // Rx FIFO Count
+		u32_t rfifoc :8; // Rx FIFO Count
 		u32_t rfifof :1; // Rx FIFO Full
-		u32_t tfifoc :6; // Tx FIFO Count
+		u32_t rfifoe :1;  // Rx FIFO Error
+		u32_t res_0  :6;
+		u32_t tfifoc :8; // Tx FIFO Count
 		u32_t tfifof :1; // Tx FIFO Full
-		u32_t res_0  :1; // Reserved
+		u32_t res_1  :7; // Reserved
 	} fields;
 	u32_t all;
 };
 
 union exynos5250_uart_modem_status_register {
 	struct {
-		u32_t cs :1; // Clear to Send
+		u32_t cs    :1; // Clear to Send
 		u32_t res_0 :4; // Reserved
-		u32_t dcts :1; // Delta CTS
-		u32_t res_1 :3; // Reserved
+		u32_t dcts  :1; // Delta CTS
+		u32_t res_1 :26; // Reserved
 	} fields;
 	u32_t all;
 };
@@ -182,6 +197,7 @@ union exynos5250_uart_interrupt_register {
 		u32_t error :1; // Error Interrupt Generated
 		u32_t txd   :1; // Transmit Interrupt Generated
 		u32_t modem :1; // Modem Interrupt Generated
+		u32_t res_0 :28;
 	} fields;
 	u32_t all;
 };
@@ -207,13 +223,8 @@ struct exynos5250_uart_block {
 result_t exynos5250_uart_init(exynos5250_uart_block_t *block, size_t options);
 result_t exynos5250_uart_fini(exynos5250_uart_block_t *block);
 
-result_t exynos5250_uart_set_clock(exynos5250_uart_block_t *block);
-
 result_t exynos5250_uart_write(exynos5250_uart_block_t *block, u8_t *buffer, size_t size);
-result_t exynos5250_uart_read(exynos5250_uart_block_t *block, u8_t *buffer, size_t size);
-
 result_t exynos5250_uart_putc(exynos5250_uart_block_t *block, u8_t c);
-result_t exynos5250_uart_getc(exynos5250_uart_block_t *block, u8_t *c);
 
 #endif //__C__
 

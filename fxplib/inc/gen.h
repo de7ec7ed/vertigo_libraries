@@ -24,6 +24,9 @@
 
 #ifdef __C__
 
+#define GEN_REFERENCE_GLOBAL(a) \
+	*((void **)gen_add_base(&a))
+
 extern void * gen_get_base();
 extern void * gen_add_base(void *address);
 extern void * gen_subtract_base(void *address);

@@ -87,8 +87,6 @@
 
 #ifdef __DBGLIB_MSM8960__
 #define SER_INIT(a, b) msm8960_uartdm_init(a, b)
-#define SER_GETC(a, b) msm8960_uartdm_getc(a, b)
-#define SER_READ(a, b, c) msm8960_uartdm_read(a, b, c)
 #define SER_PUTC(a, b) msm8960_uartdm_putc(a, b)
 #define SER_WRITE(a, b, c) msm8960_uartdm_write(a, b, c)
 #define SER_FINI(a) msm8960_uartdm_fini(a)
@@ -400,13 +398,8 @@ struct msm8960_uartdm_block {
 result_t msm8960_uartdm_init(msm8960_uartdm_block_t *block, size_t options);
 result_t msm8960_uartdm_fini(msm8960_uartdm_block_t *block);
 
-result_t msm8960_uartdm_set_clock(msm8960_uartdm_block_t *block);
-
 result_t msm8960_uartdm_write(msm8960_uartdm_block_t *block, u8_t *buffer, size_t size);
-result_t msm8960_uartdm_read(msm8960_uartdm_block_t *block, u8_t *buffer, size_t size);
-
 result_t msm8960_uartdm_putc(msm8960_uartdm_block_t *block, u8_t c);
-result_t msm8960_uartdm_getc(msm8960_uartdm_block_t *block, u8_t *c);
 
 #endif //__C__
 

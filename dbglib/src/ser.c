@@ -30,6 +30,7 @@
 #include <dbglib/s5l8930_uart.h>
 #include <dbglib/msm8960_uartdm.h>
 #include <dbglib/exynos5250_uart.h>
+#include <dbglib/qemu_uart.h>
 
 ser_block_t *ser_block = NULL;
 
@@ -103,40 +104,6 @@ result_t ser_write(u8_t *buffer, size_t size) {
 	}
 
 	return SER_WRITE(*sb, buffer, size);
-}
-
-result_t ser_getc(u8_t *c) {
-
-	ser_block_t **sb;
-
-	sb = gen_add_base(&ser_block);
-
-	if(*sb == NULL) {
-		return FAILURE;
-	}
-
-	if(c == NULL) {
-		return FAILURE;
-	}
-
-	return SER_GETC(*sb, c);
-}
-
-result_t ser_read(u8_t *buffer, size_t size) {
-
-	ser_block_t **sb;
-
-	sb = gen_add_base(&ser_block);
-
-	if(*sb == NULL) {
-		return FAILURE;
-	}
-
-	if(buffer == NULL) {
-		return FAILURE;
-	}
-
-	return SER_READ(*sb, buffer, size);
 }
 
 result_t ser_print(char *string, int number) {

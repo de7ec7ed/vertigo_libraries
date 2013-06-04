@@ -45,15 +45,6 @@ result_t exynos5250_uart_fini(exynos5250_uart_block_t *block) {
 	return SUCCESS;
 }
 
-result_t exynos5250_uart_set_clock(exynos5250_uart_block_t *block) {
-
-	UNUSED_VARIABLE(block);
-
-	// TODO: lots of freq and clock stuff.
-
-	return FAILURE;
-}
-
 result_t exynos5250_uart_write(exynos5250_uart_block_t *block, u8_t *buffer, size_t size) {
 
 	size_t i;
@@ -73,40 +64,13 @@ result_t exynos5250_uart_write(exynos5250_uart_block_t *block, u8_t *buffer, siz
 	return SUCCESS;
 }
 
-result_t exynos5250_uart_read( exynos5250_uart_block_t *block, u8_t *buffer, size_t size) {
-
-	size_t i;
-
-	for(i = 0; i < size; i++) {
-		if(exynos5250_uart_getc(block, &(buffer[i])) != SUCCESS) {
-			return FAILURE;
-		}
-	}
-
-	return FAILURE;
-}
-
 result_t exynos5250_uart_putc(exynos5250_uart_block_t *block, u8_t c) {
 
 	size_t i;
 
 	for(i = 0; i < EXYNOS5250_UART_TX_TIMEOUT_PERIOD; i++) {
-		if(block->utrstat.fields.tbe == TRUE) {
+		if(block->ufstat.fields.tfifof == FALSE) {
 			block->utxh.u8 = c;
-			return SUCCESS;
-		}
-	}
-
-	return FAILURE;
-}
-
-result_t exynos5250_uart_getc(exynos5250_uart_block_t *block, u8_t *c) {
-
-	size_t i;
-
-	for(i = 0; i < EXYNOS5250_UART_RX_TIMEOUT_PERIOD; i++) {
-		if(block->utrstat.fields.rbdr == TRUE) {
-			*c = block->urxh.u8;
 			return SUCCESS;
 		}
 	}
